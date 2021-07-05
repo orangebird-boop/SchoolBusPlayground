@@ -1,11 +1,4 @@
-// Just some comments
-//new brach test
-//third change
- 
- 
 
- 
- 
  
  //======================
  // MARK: - Classes
@@ -176,11 +169,11 @@ func whoAmI() ->Player {
         case "1":
             print(" PLAYER 1 choose your characters ")
             return Player(playerID:1)
-            //chooseCharacter()
+            
         case "2":
             print(" PLAYER 2 choose your characters ")
             return Player(playerID:2)
-            //chooseCharacter()
+            
         case "3":
             print(" You chose to return to MAIN MENU")
             mainMenu()
@@ -214,38 +207,29 @@ func chooseCharacter() ->Character {
         switch characterChoice {
         case "1":
             print(" You chose Batman")
-            
-           // print(test[0].description)
         case "2":
             print(" You chose Hermione Granger")
-            //print(test[1].description)
         case "3":
             print(" You chose Antman")
-          //  print(test[2].description)
         case "4":
             print(" You chose Tank Girl")
-           // print(test[3].description)
         case "5":
             print(" You chose Ace Ventura")
-            //print(test[4].description)
         case "6":
             print(" You chose Zohan")
-           // print(test[5].description)
         case "7":
             print(" You chose Kato")
-           // print(test[6].description)
         case "8":
             print(" You chose Aggretsuko")
-            //print(test[7].description)
         case "9":
             print(" You chose to return to MAIN MENU")
            // mainMenu()
         default:
-            print("I dont understand")
+            print("I don't understand")
         }
         if let choice = Int(characterChoice){
             return Character.getcharacter(characterid: choice)
-            print("Cast succesful")
+            
         }
         
     }
@@ -255,18 +239,75 @@ func chooseCharacter() ->Character {
     
 }
 
+//======================
+// MARK: - 4th Menu - Action
+//======================
+
+func chooseAction(P1: Player, P2: Player) {
+    
+    var selectedVictim = false
+    print("What do you want to do?"
+            + "\n1. Attack"
+            + "\n2. Heal")
+    if let actionChoice = readLine() {
+    switch actionChoice {
+    case "1":
+        chooseAttaker(A1: P1, A2: P2)
+        print("Chose your victim")
+        for characters in P2.chosenCharacters {
+            print(characters.characterID, characters.characterName)
+            }
+        let victim = readLine()
+    case "2":
+        print("you heal)")
+    default:
+        print("I don't understand. Choose between 1 or 2")
+       
+    }
+    }
+}
+func chooseAttaker(A1: Player, A2: Player){
+    var selectedAttacker = false
+    while selectedAttacker == false{
+        
+    
+    print("Choose your character to attack")
+  
+    for characters in A1.chosenCharacters{
+        print(characters.characterID, characters.characterName )
+        
+    }
+    if let attacker = readLine(){
+        
+    for characters in A1.chosenCharacters{
+        
+        if let choice = Int(attacker) {
+            if characters.characterID == choice{
+            selectedAttacker = true
+            }else{
+                print("Please choose from the numbers in front of the characters")
+            }
+        }
+    }
+}
+}
+}
+func chooseVictim(
+
 //main loop of the game
 var MYGAME = true
 while MYGAME == true {
     mainMenu()
     var player1 = whoAmI()
-    while player1.chosenCharacters.count < 1{
+    while player1.chosenCharacters.count < 3{                               //player 1 choses 3 characters
         player1.chosenCharacters.append(chooseCharacter())
     }
-    print(player1.chosenCharacters[0].characterName)
+    
     var player2 = whoAmI()
-    while player2.chosenCharacters.count < 1{
+    while player2.chosenCharacters.count < 3{                                //player 1 choses 3 characters
         player2.chosenCharacters.append(chooseCharacter())
     }
-    print(player2.chosenCharacters[0].weapon.nameOfItem)
+    chooseAction(P1: player1,P2: player2)                                          //here I pass the values of variables player1 et 2 in to the function
+    
 }
+
