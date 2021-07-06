@@ -12,7 +12,9 @@ class GameSession {
 class Player {
    let playerID: Int
    var chosenCharacters = [Character]()
-   //should have a list or a dictionnary of characters, each player 3 characters
+   var currentAttacker = Character()
+   var currentVictim = Character()
+   var currentHeal = Character()
    init(playerID: Int, chosenCharacters: [Character] = []){
        self.playerID = playerID
        self.chosenCharacters = chosenCharacters
@@ -20,7 +22,51 @@ class Player {
    init(playerID: Int){
        self.playerID = playerID
    }
-  
+    
+    func setBlank(){
+        currentAttacker = Character()
+        currentVictim = Character()
+        currentHeal = Character()
+    }
+    
+    func fight(activePlayer: Player){
+        print(currentVictim.lifePoints)
+        let x = currentVictim.lifePoints - currentAttacker.weapon.effect
+        print("value of x", x)
+        currentVictim.lifePoints = x
+        for character in activePlayer.chosenCharacters{
+            if character.characterID == currentVictim.characterID{
+                character.lifePoints = x
+                if character.lifePoints < 1{
+                    character.isDead = true
+                    
+                }
+            }
+           
+        }
+       
+    }
+    func usePotion(){
+        print(currentHeal.lifePoints)
+        let y = currentHeal.lifePoints + currentHeal.potion.effect
+        print("the value of potion is ", y)
+        currentHeal.lifePoints = y
+        for character in chosenCharacters{
+            if character.characterID == currentHeal.characterID{
+                character.lifePoints = y
+            }
+        }
+    }
+    func isEverybodyDead()-> Bool{
+        for characters in chosenCharacters{
+            print(characters.isDead)
+            if characters.isDead == false{
+                return false
+            }
+            
+        }
+        return true
+    }
 }
 
 
@@ -29,11 +75,11 @@ class Character {
    var characterName:String
    let description:String
    var lifePoints:Int
-   var weapon:Item // needs to be changed to a type Weapon later
+   var weapon:Item
    var potion: Item
    var isDead :Bool = false
-   
-    static var characterList = [
+   var usedInRound: Bool = false
+   static var characterList = [
         Character(characterID: 1, characterName: "Batman", description: "He has 15 lifepoints. His weapon is a Batarang, deals 5 points of damage, and has a medium healin potion.", lifePoints: 15, weapon: Item.getitem(itemid: 1), potion: Item.getitem(itemid: 12)),
         Character(characterID: 2, characterName:  "Hermione Granger", description: "She is talented witch. She has 16 lifepoins. Her weapon is a magicwand, deals 4 damage, and has a strong healing potion.", lifePoints: 16, weapon: Item.getitem(itemid: 2), potion: Item.getitem(itemid: 13)),
         Character(characterID: 3, characterName: "Antman", description: "He can became small. Like an ant. He has 13 lifepoints. His weapon is ant acid, deals 6 damage, and has a  medium healing potion.", lifePoints: 13, weapon: Item.getitem(itemid: 3), potion: Item.getitem(itemid: 12)),
@@ -64,16 +110,21 @@ class Character {
        self.lifePoints = lifePoints
        self.weapon = weapon
        self.potion = potion
-    
-       
-   
    }
-       // the list of all the characters, I set the values of each availible character
-     
-
-    //methods: takeDamage(), die(), isdead()?
     
+    init (){
+        self.characterID = 0
+        self.characterName = ""
+        self.description = ""
+        self.lifePoints = 0
+        self.weapon = Item.getitem(itemid: 14)
+        self.potion = Item.getitem(itemid: 14)
+        
+    }
+       // the list of all the characters, I set the values of each availible character
+     //methods: takeDamage(), die(), isdead()?
 }
+
 class Item{
     var nameOfItem:String
     var effect:Int
@@ -85,16 +136,16 @@ class Item{
         self.effect = effect
     }
     static let itemList = [
-        Item(itemID: 1, nameOfItem: "Batarang", effect: -5),
-        Item(itemID: 2, nameOfItem: "magicwand", effect: -4),
-        Item(itemID: 3, nameOfItem: "antacid", effect: -6),
-        Item(itemID: 4, nameOfItem: "tank", effect: -13),
-        Item(itemID: 5, nameOfItem: "rhinocall", effect: -3),
-        Item(itemID: 6, nameOfItem: "scissors",effect: -15),
-        Item(itemID: 7, nameOfItem: "dart", effect: -5),
-        Item(itemID: 8, nameOfItem: "scream", effect: -8),
-        Item(itemID: 9, nameOfItem: "lasersword", effect: -10),
-        Item(itemID: 10, nameOfItem: "machete", effect: -9),
+        Item(itemID: 1, nameOfItem: "Batarang", effect: 50),
+        Item(itemID: 2, nameOfItem: "magicwand", effect: 4),
+        Item(itemID: 3, nameOfItem: "antacid", effect: 6),
+        Item(itemID: 4, nameOfItem: "tank", effect: 13),
+        Item(itemID: 5, nameOfItem: "rhinocall", effect: 3),
+        Item(itemID: 6, nameOfItem: "scissors",effect: 15),
+        Item(itemID: 7, nameOfItem: "dart", effect: 5),
+        Item(itemID: 8, nameOfItem: "scream", effect: 8),
+        Item(itemID: 9, nameOfItem: "lasersword", effect: 10),
+        Item(itemID: 10, nameOfItem: "machete", effect: 9),
         Item(itemID: 11, nameOfItem: "small potion", effect: 3),
         Item(itemID: 12, nameOfItem: "medium potion", effect: 6),
         Item(itemID: 13, nameOfItem: "big potion", effect: 9),
@@ -113,9 +164,6 @@ class Item{
         return Item(itemID: 14, nameOfItem: "Something", effect: 0)         // if not give back some value which i made up
     
     }
-    
- //method useItem(),
- 
  }
 
 
@@ -149,6 +197,7 @@ func mainMenu(){
         }
     }
 }
+
 //======================
 // MARK: - 2nd Menu - Who are you?
 //======================
@@ -184,6 +233,7 @@ func whoAmI() ->Player {
     }
     return Player(playerID: 0)
 }
+
 //======================
 // MARK: - 3th Menu - Choose your character
 //======================
@@ -242,10 +292,8 @@ func chooseCharacter() ->Character {
 //======================
 // MARK: - 4th Menu - Action
 //======================
-
+// this function let you pick the action (attack or heal)
 func chooseAction(P1: Player, P2: Player) {
-    
-    var selectedVictim = false
     print("What do you want to do?"
             + "\n1. Attack"
             + "\n2. Heal")
@@ -253,61 +301,119 @@ func chooseAction(P1: Player, P2: Player) {
     switch actionChoice {
     case "1":
         chooseAttaker(A1: P1, A2: P2)
-        print("Chose your victim")
-        for characters in P2.chosenCharacters {
-            print(characters.characterID, characters.characterName)
-            }
-        let victim = readLine()
+        chooseVictim(B1: P1, B2: P2)
+        P1.fight(activePlayer: P2)
     case "2":
-        print("you heal)")
+        healYourself(C1:P1)
     default:
         print("I don't understand. Choose between 1 or 2")
        
-    }
+        }
     }
 }
+
+//choose the character which is doing the attack
 func chooseAttaker(A1: Player, A2: Player){
     var selectedAttacker = false
     while selectedAttacker == false{
-        
-    
-    print("Choose your character to attack")
-  
+    print("Choose your attacker")
     for characters in A1.chosenCharacters{
         print(characters.characterID, characters.characterName )
-        
     }
     if let attacker = readLine(){
-        
     for characters in A1.chosenCharacters{
-        
         if let choice = Int(attacker) {
             if characters.characterID == choice{
+                A1.currentAttacker = characters
             selectedAttacker = true
-            }else{
-                print("Please choose from the numbers in front of the characters")
+            }
+                }
             }
         }
     }
 }
+//choose the character you want to attack
+func chooseVictim(B1: Player, B2: Player){
+    var selectedVictim = false
+    while selectedVictim == false {
+        print("Chose your victim")
+        for characters in B2.chosenCharacters{
+            print(characters.characterID, characters.characterName )
+        }
+        if let victim = readLine(){
+            for characters in B2.chosenCharacters{
+                if let choice = Int(victim) {
+                    if characters.characterID == choice{
+                        B1.currentVictim = characters
+                        print(B1.currentVictim.characterName)
+                        selectedVictim = true
+                    }
+                }
+            }
+        }
+    }
 }
+// heal your own character
+func healYourself(C1: Player){
+    var selectedCharacter = false
+    while selectedCharacter == false {
+        print("Pick the character you want to heal")
+        for characters in C1.chosenCharacters{
+            print(characters.characterID, characters.characterName)
+        }
+        if let selection = readLine(){
+            for characters in C1.chosenCharacters{
+                if let choice = Int(selection) {
+                    if characters.characterID == choice{
+                    C1.currentHeal = characters
+                    print(C1.currentHeal)
+                        C1.usePotion()
+                    selectedCharacter = true
+                    }
+                }
+            }
+        }
+    }
 }
-func chooseVictim(
-
 //main loop of the game
 var MYGAME = true
 while MYGAME == true {
     mainMenu()
     var player1 = whoAmI()
-    while player1.chosenCharacters.count < 3{                               //player 1 choses 3 characters
+    while player1.chosenCharacters.count < 1{                               //player 1 choses 3 characters
         player1.chosenCharacters.append(chooseCharacter())
     }
     
     var player2 = whoAmI()
-    while player2.chosenCharacters.count < 3{                                //player 1 choses 3 characters
+    while player2.chosenCharacters.count < 1{                                //player 1 choses 3 characters
         player2.chosenCharacters.append(chooseCharacter())
     }
-    chooseAction(P1: player1,P2: player2)                                          //here I pass the values of variables player1 et 2 in to the function
+    //FIRST ROUND
+    /*chooseAction(P1: player1,P2: player2)
+    player1.fight(activePlayer: player2)
+
+    for i in player2.chosenCharacters{
+        print(i.characterName, i.lifePoints)
+    }
+ */
+    
+    var turn = 1
+    while turn > 0  {
+        if turn % 2 == 1{
+            chooseAction(P1: player1,P2: player2)
+            if player2.isEverybodyDead(){
+                turn = -100
+            }
+        }else {
+            chooseAction(P1: player2, P2: player1)
+            if player1.isEverybodyDead(){
+                turn = -100
+            }
+        }
+       turn += 1
+        print("Starting turn")
+    }
+    
     
 }
 
