@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		27B6190826985D7C00BACC76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B6190726985D7C00BACC76 /* main.swift */; };
-		27B6190F26985F1800BACC76 /* classGameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B6190E26985F1800BACC76 /* classGameSession.swift */; };
-		27B61911269863A300BACC76 /* classPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B61910269863A300BACC76 /* classPlayer.swift */; };
-		27B619132698643800BACC76 /* classCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B619122698643800BACC76 /* classCharacter.swift */; };
-		27B61915269865C300BACC76 /* classItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B61914269865C300BACC76 /* classItem.swift */; };
+		27B6190F26985F1800BACC76 /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B6190E26985F1800BACC76 /* GameSession.swift */; };
+		27B61911269863A300BACC76 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B61910269863A300BACC76 /* Player.swift */; };
+		27B619132698643800BACC76 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B619122698643800BACC76 /* Character.swift */; };
+		27B61915269865C300BACC76 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B61914269865C300BACC76 /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,10 +29,10 @@
 /* Begin PBXFileReference section */
 		27B6190426985D7C00BACC76 /* P3_01_Xcode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = P3_01_Xcode; sourceTree = BUILT_PRODUCTS_DIR; };
 		27B6190726985D7C00BACC76 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		27B6190E26985F1800BACC76 /* classGameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classGameSession.swift; sourceTree = "<group>"; };
-		27B61910269863A300BACC76 /* classPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classPlayer.swift; sourceTree = "<group>"; };
-		27B619122698643800BACC76 /* classCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classCharacter.swift; sourceTree = "<group>"; };
-		27B61914269865C300BACC76 /* classItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classItem.swift; sourceTree = "<group>"; usesTabs = 0; };
+		27B6190E26985F1800BACC76 /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
+		27B61910269863A300BACC76 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		27B619122698643800BACC76 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		27B61914269865C300BACC76 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; usesTabs = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,10 +66,10 @@
 			isa = PBXGroup;
 			children = (
 				27B6190726985D7C00BACC76 /* main.swift */,
-				27B6190E26985F1800BACC76 /* classGameSession.swift */,
-				27B61910269863A300BACC76 /* classPlayer.swift */,
-				27B619122698643800BACC76 /* classCharacter.swift */,
-				27B61914269865C300BACC76 /* classItem.swift */,
+				27B6190E26985F1800BACC76 /* GameSession.swift */,
+				27B61910269863A300BACC76 /* Player.swift */,
+				27B619122698643800BACC76 /* Character.swift */,
+				27B61914269865C300BACC76 /* Item.swift */,
 			);
 			path = P3_01_Xcode;
 			sourceTree = "<group>";
@@ -131,11 +131,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27B61911269863A300BACC76 /* classPlayer.swift in Sources */,
+				27B61911269863A300BACC76 /* Player.swift in Sources */,
 				27B6190826985D7C00BACC76 /* main.swift in Sources */,
-				27B619132698643800BACC76 /* classCharacter.swift in Sources */,
-				27B61915269865C300BACC76 /* classItem.swift in Sources */,
-				27B6190F26985F1800BACC76 /* classGameSession.swift in Sources */,
+				27B619132698643800BACC76 /* Character.swift in Sources */,
+				27B61915269865C300BACC76 /* Item.swift in Sources */,
+				27B6190F26985F1800BACC76 /* GameSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

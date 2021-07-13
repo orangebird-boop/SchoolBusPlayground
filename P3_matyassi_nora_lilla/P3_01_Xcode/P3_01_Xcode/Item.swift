@@ -17,11 +17,13 @@ class Weapon: Item {
     }
 }
 
-let listOfWeapons = [
-    Weapon(name: "sword", damage: 5),
-    Weapon(name: "bigAxe", damage: 7),
-    Weapon(name: "stick", damage: 2)
-]
+    let listOfWeapons = [
+        Weapon(name: "sword", damage: 5),
+        Weapon(name: "big axe", damage: 7),
+        Weapon(name: "stick", damage: 2)
+    ]
+
+
 
 class Potion: Item {
     let healingAmount: Int
@@ -31,4 +33,12 @@ class Potion: Item {
         
         super.init(name: name)
     }
+
+    
 }
+
+    let listOfPotions = [
+        Potion(name: "empty bottle", healingAmount: 0),
+        Potion(name: "small bottle", healingAmount: 3),
+        Potion(name: "big bottle", healingAmount: 6)
+    ]
